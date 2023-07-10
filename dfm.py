@@ -21,7 +21,7 @@ torch_ver = torch.__version__[:3]
 
 
 
-class PAM(nn.Module):
+class PAL(nn.Module):
     def __init__(self, in_dim):
         super(PAM, self).__init__()
         self.chanel_in = in_dim
@@ -43,7 +43,7 @@ class PAM(nn.Module):
         return out
 
 
-class CAM(nn.Module):
+class CAL(nn.Module):
     def __init__(self, in_dim):
         super(CAM, self).__init__()
         self.chanel_in = in_dim
@@ -79,8 +79,8 @@ class feature_extraction(nn.Module):
         self.layer3 = self._make_layer(BasicBlock, 128, 3, 1, 1, 1)
         self.layer4 = self._make_layer(BasicBlock, 128, 3, 1, 1, 2)
 
-        self.sa = PAM(64)  
-        self.sc = CAM(64)
+        self.sa = PAL(64)  
+        self.sc = CAL(64)
     def _make_layer(self, block, planes, blocks, stride, pad, dilation):
         downsample = None
         if stride != 1 or self.inplanes != planes * block.expansion:
@@ -155,9 +155,9 @@ class hourglass(nn.Module):
         conv6 = F.relu(self.conv6(conv5) + self.redir1(x), inplace=True)
         return conv6
 
-class ACVNet(nn.Module):
+class DFMNet(nn.Module):
     def __init__(self, maxdisp, attn_weights_only, freeze_attn_weights):
-        super(ACVNet, self).__init__()
+        super(DFMNet, self).__init__()
         self.maxdisp = maxdisp
         self.attn_weights_only = attn_weights_only
         self.freeze_attn_weights = freeze_attn_weights
