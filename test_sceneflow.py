@@ -22,7 +22,7 @@ import gc
 import cv2
 
 cudnn.benchmark = True
-os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 parser = argparse.ArgumentParser(description='DFMNet')
 parser.add_argument('--model', default='dfmnet', help='select a model structure', choices=__models__.keys())
@@ -31,7 +31,7 @@ parser.add_argument('--dataset', default='sceneflow', help='dataset name', choic
 parser.add_argument('--datapath', default="/home/user/guazai/", help='data path')
 parser.add_argument('--testlist',default='./filenames/sceneflow_test.txt', help='testing list')
 parser.add_argument('--test_batch_size', type=int, default=1, help='testing batch size')
-parser.add_argument('--loadckpt', default='./pretrained_model/checkpoint_000059.ckpt',help='load the weights from a specific checkpoint')
+parser.add_argument('--loadckpt', default='./pretrained_model/checkpoint.ckpt',help='load the weights from a specific checkpoint')
 
 # parse arguments, set seeds
 args = parser.parse_args()
