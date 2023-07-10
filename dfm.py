@@ -28,8 +28,8 @@ class PAM(nn.Module):
         self.query_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.key_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.value_conv = Conv2d(in_channels=in_dim, out_channels=in_dim, kernel_size=1)
-        self.gamma = Parameter(torch.zeros(1))  # α尺度系数初始化为0，并逐渐地学习分配到更大的权重
-        self.softmax = Softmax(dim=-1)  # 对每一行进行softmax
+        self.gamma = Parameter(torch.zeros(1))  
+        self.softmax = Softmax(dim=-1)  
     def forward(self, x):
         m_batchsize, C, height, width = x.size()
         proj_query = self.query_conv(x).view(m_batchsize, -1, width*height).permute(0, 2, 1)
@@ -47,8 +47,8 @@ class CAM(nn.Module):
     def __init__(self, in_dim):
         super(CAM, self).__init__()
         self.chanel_in = in_dim
-        self.gamma = Parameter(torch.zeros(1))  # β尺度系数初始化为0，并逐渐地学习分配到更大的权重
-        self.softmax = Softmax(dim=-1)  # 对每一行进行softmax
+        self.gamma = Parameter(torch.zeros(1))  
+        self.softmax = Softmax(dim=-1) 
 
     def forward(self, x):
         m_batchsize, C, height, width = x.size()
@@ -79,7 +79,7 @@ class feature_extraction(nn.Module):
         self.layer3 = self._make_layer(BasicBlock, 128, 3, 1, 1, 1)
         self.layer4 = self._make_layer(BasicBlock, 128, 3, 1, 1, 2)
 
-        self.sa = PAM(64)  # 空间注意力模块
+        self.sa = PAM(64)  
         self.sc = CAM(64)
     def _make_layer(self, block, planes, blocks, stride, pad, dilation):
         downsample = None
